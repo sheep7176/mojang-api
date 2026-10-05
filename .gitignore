@@ -1,0 +1,8 @@
+__picache__/
+.venv/
+*.pyc
+*.png
+*.gif
+*.jpg
+GUI-AI.py
+text.py
