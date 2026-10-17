@@ -26,7 +26,7 @@ def Get_data(username, usernameurl, outtime, steve, alex):
             if not properties:
                 print(f"用户名:{username}\nUUID:{uuid}\n错误:该玩家没有设置皮肤。")
                 return None
-            value = properties[0].get("value")   # ← 复用 properties，不重复请求
+            value = properties[0].get("value")
             system_time = datetime.now()
             value_b64 = base64.b64decode(value)
             value_b64_json = value_b64.decode('utf-8')
