@@ -58,7 +58,7 @@ def Get_data(username, usernameurl, outtime, steve, alex):
         print("错误:请求过于频繁,请稍后再试。")
         return None
     elif return_data.status_code == 500:
-        print("错误:请重试")
+        print("错误:服务器内部错误,请稍后再试。")
         return None
     elif return_data.status_code == 503:
         print("错误:服务器维护中,请稍后再试。")
