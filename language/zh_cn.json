@@ -1,0 +1,32 @@
+{
+    "main": {
+        "qUsername": "输入用户名: \n",
+        "outData": "\n用户名:{username}\nUUID:{uuid}\n皮肤文件链接:{value_SKIN_url}\n皮肤类型:{value_SKIN_model_name}",
+        "outDataCAPE": "披风文件链接:{value_CAPE_url}",
+        "outTime": "时间戳:{value_timestamp_datetime}\n本地时间:{system_time}\n",
+        "qDownloadSKIN": "是否下载皮肤文件? (y/n): \n",
+        "qDownloadCAPE": "是否下载披风文件? (y/n): \n",
+        "inputError": "错误:请输入Y或N"
+    },
+    "Get_data":{
+        "getError" :"错误:请求失败 {e}",
+        "outUserNotSKIN": "用户名:{username}\nUUID:{uuid}\n错误:该玩家没有设置皮肤。",
+        "systemError": "错误:请重试",
+        "errorUUIDNotSKIN" : "错误:无法获取皮肤数据,请检查UUID是否正确。",
+        "error404" : "错误:用户名不存在,请检查用户名是否正确。",
+        "error429": "错误:请求过于频繁,请稍后再试。",
+        "error500": "错误:服务器内部错误,请稍后再试。",
+        "error503": "错误:服务器维护中,请稍后再试。",
+        "errorUnknown": "错误:未知错误,状态码:{status_code}"
+    },
+    "Download_SKIN": {
+        "errorURL": "错误:无法下载皮肤图片,请检查皮肤链接是否正确。",
+        "success": "成功:皮肤图片已下载到: {SKIN_path}\n",
+        "getError":"错误:请求失败 {e}"
+    },
+    "Download_CAPE": {
+        "errorURL": "错误:无法下载披风文件,请检查披风链接是否正确。",
+        "success": "成功:披风文件已下载到: {CAPE_path}\n",
+        "getError" :"错误:请求失败 {e}"
+    }
+}

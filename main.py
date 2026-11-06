@@ -4,11 +4,24 @@ import base64
 import requests
 from datetime import datetime
 
+def Not_languageFile(section_name):
+    return f"错误:语言文件中缺少'{section_name}'部分,请检查语言文件是否完整。\nError: The '{section_name}' section is missing in the language file, please check if the language file is complete."
+
 def Get_data(username, usernameurl, outtime, steve, alex):
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "language" ,"zh_cn.json"), "r", encoding="utf-8") as language_file:
+            language_temp = json.load(language_file)
+            language = language_temp["Get_data"]
+    except FileNotFoundError:
+        print("找不到语言文件\ncan't find language file")
+        return
+    except KeyError:
+        print(Not_languageFile("Get_data"))
+        return
     try:
         return_data = requests.get(usernameurl , timeout=outtime)
     except requests.RequestException as e:
-        print(f"错误:请求失败 {e}")
+        print(language.get("getError").format(e=e))
         return None
     if return_data.status_code == 200:
         usernamedata = return_data.json()
@@ -18,13 +31,13 @@ def Get_data(username, usernameurl, outtime, steve, alex):
         try:
             return_data = requests.get(uuidurl, timeout=outtime)
         except requests.RequestException as e:
-            print(f"错误:请求失败 {e}")
+            print(language.get("getError").format(e=e))
             return None
         if return_data.status_code == 200:
             uuiddata = return_data.json()
             properties = uuiddata.get("properties", [])
             if not properties:
-                print(f"用户名:{username}\nUUID:{uuid}\n错误:该玩家没有设置皮肤。")
+                print(language.get("outUserNotSKIN").format(username=username, uuid=uuid))
                 return None
             value = properties[0].get("value")
             system_time = datetime.now()
@@ -46,30 +59,40 @@ def Get_data(username, usernameurl, outtime, steve, alex):
             if value_json.get("profileId") == uuid and value_json.get("profileName") == username:
                 return username, uuid, value_SKIN_url, value_SKIN_model ,value_SKIN_model_name, value_timestamp_datetime, value_CAPE_url, system_time
             else:
-                print("错误:请重试")
+                print(language.get("systemError"))
                 return None
         else:
-            print("错误:无法获取皮肤数据,请检查UUID是否正确。")
+            print(language.get("errorUUIDNotSKIN"))
             return None
     elif return_data.status_code == 404:
-        print("错误:用户名不存在,请检查用户名是否正确。")
+        print(language.get("error404"))
         return None
     elif return_data.status_code == 429:
-        print("错误:请求过于频繁,请稍后再试。")
+        print(language.get("error429"))
         return None
     elif return_data.status_code == 500:
-        print("错误:服务器内部错误,请稍后再试。")
+        print(language.get("error500"))
         return None
     elif return_data.status_code == 503:
-        print("错误:服务器维护中,请稍后再试。")
+        print(language.get("error503"))
         return None
     else:
-        print(f"错误:未知错误,状态码:{return_data.status_code}")
+        print(language.get("errorUnknown").format(status_code=return_data.status_code))
         return None
 
 def Download_SKIN(value_SKIN_url, value_SKIN_model, username , outtime):
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "language", "zh_cn.json"), "r", encoding="utf-8") as language_file:
+            language_temp = json.load(language_file)
+            language = language_temp["Download_SKIN"]
+    except FileNotFoundError:
+        print("找不到语言文件\ncan't find language file")
+        return
+    except KeyError:
+        print(Not_languageFile("Download_SKIN"))
+        return
     if not value_SKIN_url:
-        print("错误:无法下载皮肤图片,请检查皮肤链接是否正确。")
+        print(language.get("errorURL"))
         return False
     try:
         return_data = requests.get(value_SKIN_url, timeout=outtime)
@@ -88,13 +111,23 @@ def Download_SKIN(value_SKIN_url, value_SKIN_model, username , outtime):
         SKIN_path = os.path.join(SKIN_folder, SKIN_name)
         with open(SKIN_path, "wb") as f:
             f.write(SKIN_data)
-        print(f"成功:皮肤图片已下载到: {SKIN_path}\n")
+        print(language.get("success").format(SKIN_path=SKIN_path))
         return True
     except requests.RequestException as e:
-        print(f"错误:请求失败 {e}")
+        print(language.get("getError").format(e=e))
         return False
 
 def Download_CAPE(value_CAPE_url, username , outtime):
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "language", "zh_cn.json"), "r", encoding="utf-8") as language_file:
+            language_temp = json.load(language_file)
+            language = language_temp["Download_CAPE"]
+    except FileNotFoundError:
+        print("找不到语言文件\ncan't find language file")
+        return
+    except KeyError:
+        print(Not_languageFile("Download_CAPE"))
+        return
     try:
         return_data = requests.get(value_CAPE_url, timeout=outtime)
         return_data.raise_for_status()
@@ -112,37 +145,47 @@ def Download_CAPE(value_CAPE_url, username , outtime):
         CAPE_path = os.path.join(CAPE_folder, CAPE_name)
         with open(CAPE_path, "wb") as f:
             f.write(CAPE_data)
-        print(f"成功:披风文件已下载到: {CAPE_path}\n")
+        print(language.get("success").format(CAPE_path=CAPE_path))
         return True
     except requests.RequestException as e:
-        print(f"错误:请求失败 {e}")
+        print(language.get("getError").format(e=e))
         return False
 
 def main():
+    try:
+        with open(os.path.join(os.path.dirname(__file__), "language", "zh_cn.json"), "r", encoding="utf-8") as language_file:
+            language_temp = json.load(language_file)
+            language = language_temp["main"]
+    except FileNotFoundError:
+        print("找不到语言文件\ncan't find language file")
+        return
+    except KeyError:
+        print(Not_languageFile("main"))
+        return
     outtime = 10
     alex = "[alex(纤细)]"
     steve = "[steve(标准)]"
-    username = input("输入用户名: \n").strip()
+    username = input(language.get("qUsername")).strip()
     usernameurl = f"https://api.mojang.com/users/profiles/minecraft/{username}"
     return_data = Get_data(username , usernameurl , outtime , steve , alex)
     if return_data is None:
         return 
     username, uuid, value_SKIN_url, value_SKIN_model, value_SKIN_model_name, value_timestamp_datetime, value_CAPE_url, system_time = return_data
-    print(f"\n用户名:{username}\nUUID:{uuid}\n皮肤文件链接:{value_SKIN_url}\n皮肤类型:{value_SKIN_model_name}")
+    print(language.get("outData").format(username=username, uuid=uuid, value_SKIN_url=value_SKIN_url, value_SKIN_model_name=value_SKIN_model_name))
     if value_CAPE_url:
-        print(f"披风文件链接:{value_CAPE_url}")
-    print(f"时间戳:{value_timestamp_datetime}\n本地时间:{system_time}\n")
-    DownloadSKIN = input("是否下载皮肤图片?(Y/N): \n").strip().lower()
+        print(language.get("outDataCAPE").format(value_CAPE_url=value_CAPE_url))
+    print(language.get("outTime").format(value_timestamp_datetime=value_timestamp_datetime, system_time=system_time))
+    DownloadSKIN = input(language.get("qDownloadSKIN")).strip().lower()
     while DownloadSKIN not in ["y", "n"]:
-        print("错误:请输入Y或N")
-        DownloadSKIN = input("是否下载皮肤图片?(Y/N): \n").strip().lower()
+        print(language.get("inputError"))
+        DownloadSKIN = input(language.get("qDownloadSKIN")).strip().lower()
     if DownloadSKIN == "y":
         Download_SKIN(value_SKIN_url, value_SKIN_model, username, outtime)
     if value_CAPE_url:
-        DownloadCAPE = input("是否下载披风文件?(Y/N): \n").strip().lower()
+        DownloadCAPE = input(language.get("qDownloadCAPE")).strip().lower()
         while DownloadCAPE not in ["y", "n"]:
-            print("错误:请输入Y或N")
-            DownloadCAPE = input("是否下载披风文件?(Y/N): \n").strip().lower()
+            print(language.get("inputError"))
+            DownloadCAPE = input(language.get("qDownloadCAPE")).strip().lower()
         if DownloadCAPE == "y":
             Download_CAPE(value_CAPE_url, username , outtime)
 
