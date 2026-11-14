@@ -23,6 +23,10 @@
    git clone https://github.com/sheep7176/mojang-api.git
    cd mojang-api
    ```
+   *或者*
+   ```bash
+   git clone https://gitee.com/sheep7176/mojang-api.git
+   ```
 
 2. **安装依赖**：
    ```bash
@@ -69,4 +73,6 @@ py main.py
 
 ---
 
-如果这个工具帮到了你，欢迎在右上角点个 ⭐ **Star** 支持一下 AWA！
+如果这个工具帮到了你，欢迎在右上角点个 ⭐ **Star** 支持一下 AWA
+
+*注:本工具除了此[README.md](README.md)并未使用AI生成*
