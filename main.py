@@ -55,7 +55,7 @@ def Get_data(username, usernameurl, outtime, steve, alex, language):
             value_SKIN_url = value_json.get("textures", {}).get("SKIN", {}).get("url" , "")
             value_SKIN_model = value_json.get("textures", {}).get("SKIN", {}).get("metadata", {}).get("model" , "classic")
             value_CAPE_url = value_json.get("textures", {}).get("CAPE", {}).get("url", None)
-            the_other_model = f"[{value_SKIN_model}(未知)]"
+            the_other_model = f"[{value_SKIN_model}({language.get('unknown')})]"
             if value_SKIN_model == "classic":
                 value_SKIN_model_name = f"classic{steve}"
             elif value_SKIN_model == "slim":
@@ -141,20 +141,18 @@ def Download_CAPE(value_CAPE_url, username , outtime, language):
         return False
 
 def main():
-    choice_language_num = input("选择语言\nSelect language\n\n1.中文(简体)\n2.English\n")
-    if choice_language_num == "1":
-        choice_language = "zh_cn"
-    elif choice_language_num == "2":
-        choice_language = "en_us"
-    while choice_language_num not in ["1", "2"]:
-        print("错误：输入错误\nError: Invalid input")
+    while True:
         choice_language_num = input("选择语言\nSelect language\n\n1.中文(简体)\n2.English\n")
         if choice_language_num == "1":
             choice_language = "zh_cn"
-        elif choice_language_num == "2":   #暂未完成
+            break
+        elif choice_language_num == "2":
 #            choice_language = "en_us"
             print("错误：该功能暂未完成\nError: This feature is not yet completed")
             choice_language = "zh_cn"
+            break
+        else:
+            print("错误：输入错误\nError: Invalid input")
     language = Get_language("main", choice_language)
     if language is None:
         return
