@@ -147,9 +147,7 @@ def main():
             choice_language = "zh_cn"
             break
         elif choice_language_num == "2":
-#            choice_language = "en_us"
-            print("错误：该功能暂未完成\nError: This feature is not yet completed")
-            choice_language = "zh_cn"
+            choice_language = "en_us"
             break
         else:
             print("错误：输入错误\nError: Invalid input")
