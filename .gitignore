@@ -6,3 +6,5 @@ __picache__/
 *.jpg
 GUI-AI.py
 text.py
+*.exe
+*.zip

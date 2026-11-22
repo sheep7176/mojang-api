@@ -1,0 +1,38 @@
+{
+    "main": {
+        "alex": "[alex(slim)]",
+        "steve": "[steve(standard)]",
+        "qUsername": "Enter username: \n",
+        "outData": "\nUsername:{username}\nUUID:{uuid}\nSkin file URL:{value_SKIN_url}\nSkin type:{value_SKIN_model_name}",
+        "outDataCAPE": "Cape file URL:{value_CAPE_url}",
+        "outTime": "Timestamp:{value_timestamp_datetime}\nLocal time:{system_time}\n",
+        "qDownloadSKIN": "Download skin file? (y/n): \n",
+        "qDownloadCAPE": "Download cape file? (y/n): \n",
+        "inputError": "Error: Please enter Y or N",
+        "getError": "Error: Download failed. Request aborted. Please check your network.",
+        "errorDownloadSKIN": "Error: Failed to download skin image. Retrying...",
+        "errorDownloadCAPE": "Error: Failed to download cape file. Retrying..."
+    },
+    "Get_data": {
+        "getError": "Error: Request failed {e}",
+        "outUserNotSKIN": "Username:{username}\nUUID:{uuid}\nError: This player has not set a skin.",
+        "systemError": "Error: Please try again",
+        "errorUUIDNotSKIN": "Error: Unable to retrieve skin data. Please check whether the UUID is correct.",
+        "error404": "Error: Username does not exist. Please check whether the username is correct.",
+        "error429": "Error: Too many requests. Please try again later.",
+        "error500": "Error: Internal server error. Please try again later.",
+        "error503": "Error: Server is under maintenance. Please try again later.",
+        "errorUnknown": "Error: Unknown error, status code: {status_code}",
+        "unknown": "Unknown"
+    },
+    "Download_SKIN": {
+        "errorURL": "Error: Unable to download the skin image. Please check whether the skin URL is correct.",
+        "success": "Success: Skin image downloaded to: {SKIN_path}\n",
+        "getError": "Error: Request failed {e}"
+    },
+    "Download_CAPE": {
+        "errorURL": "Error: Unable to download the cape file. Please check whether the cape URL is correct.",
+        "success": "Success: Cape file downloaded to: {CAPE_path}\n",
+        "getError": "Error: Request failed {e}"
+    }
+}
