@@ -4,9 +4,9 @@ import base64
 import requests
 from datetime import datetime
 
-def Get_language(section_name):
+def Get_language(section_name, language):
     try:
-        with open(os.path.join(os.path.dirname(__file__), "language" ,"zh_cn.json"), "r", encoding="utf-8") as language_file:
+        with open(os.path.join(os.path.dirname(__file__), "language" ,f"{language}.json"), "r", encoding="utf-8") as language_file:
             language_temp = json.load(language_file)
             language = language_temp[section_name]
             return language
@@ -14,14 +14,14 @@ def Get_language(section_name):
         print("找不到语言文件\ncan't find language file")
         return None
     except KeyError:
-        print(Not_languageFile(section_name))
+        if language == "zh_cn":
+            print(f"错误:语言文件中缺少'{section_name}'部分,请检查语言文件是否完整。")
+        else:
+            print(f"Error: The '{section_name}' section is missing in the language file, please check if the language file is complete.")
         return None
 
-def Not_languageFile(section_name):
-    return f"错误:语言文件中缺少'{section_name}'部分,请检查语言文件是否完整。\nError: The '{section_name}' section is missing in the language file, please check if the language file is complete."
-
-def Get_data(username, usernameurl, outtime, steve, alex):
-    language = language = Get_language("Get_data")
+def Get_data(username, usernameurl, outtime, steve, alex, language):
+    language = Get_language("Get_data", language)
     if language is None:
         return None
     try:
@@ -86,8 +86,8 @@ def Get_data(username, usernameurl, outtime, steve, alex):
         print(language.get("errorUnknown").format(status_code=return_data.status_code))
         return None
 
-def Download_SKIN(value_SKIN_url, value_SKIN_model, username , outtime):
-    language = Get_language("Download_SKIN")
+def Download_SKIN(value_SKIN_url, value_SKIN_model, username , outtime, language):
+    language = Get_language("Download_SKIN", language)
     if language is None:
         return False
     try:
@@ -113,8 +113,8 @@ def Download_SKIN(value_SKIN_url, value_SKIN_model, username , outtime):
         print(language.get("getError").format(e=e))
         return False
 
-def Download_CAPE(value_CAPE_url, username , outtime):
-    language = Get_language("Download_CAPE")
+def Download_CAPE(value_CAPE_url, username , outtime, language):
+    language = Get_language("Download_CAPE", language)
     if language is None:
         return False
     try:
@@ -141,7 +141,21 @@ def Download_CAPE(value_CAPE_url, username , outtime):
         return False
 
 def main():
-    language = Get_language("main")
+    choice_language_num = input("选择语言\nSelect language\n\n1.中文(简体)\n2.English\n")
+    if choice_language_num == "1":
+        choice_language = "zh_cn"
+    elif choice_language_num == "2":
+        choice_language = "en_us"
+    while choice_language_num not in ["1", "2"]:
+        print("错误：输入错误\nError: Invalid input")
+        choice_language_num = input("选择语言\nSelect language\n\n1.中文(简体)\n2.English\n")
+        if choice_language_num == "1":
+            choice_language = "zh_cn"
+        elif choice_language_num == "2":   #暂未完成
+#            choice_language = "en_us"
+            print("错误：该功能暂未完成\nError: This feature is not yet completed")
+            choice_language = "zh_cn"
+    language = Get_language("main", choice_language)
     if language is None:
         return
     outtime = 10
@@ -149,7 +163,7 @@ def main():
     steve = language.get("steve")
     username = input(language.get("qUsername")).strip()
     usernameurl = f"https://api.mojang.com/users/profiles/minecraft/{username}"
-    return_data = Get_data(username , usernameurl , outtime , steve , alex)
+    return_data = Get_data(username , usernameurl , outtime , steve , alex, choice_language)
     if return_data is None:
         return 
     username, uuid, value_SKIN_url, value_SKIN_model, value_SKIN_model_name, value_timestamp_datetime, value_CAPE_url, system_time = return_data
@@ -162,10 +176,10 @@ def main():
         print(language.get("inputError"))
         DownloadSKIN = input(language.get("qDownloadSKIN")).strip().lower()
     if DownloadSKIN == "y":
-        FDownloadSKIN = Download_SKIN(value_SKIN_url, value_SKIN_model, username, outtime)
+        FDownloadSKIN = Download_SKIN(value_SKIN_url, value_SKIN_model, username, outtime, choice_language)
         if FDownloadSKIN is False:
             print(language.get("errorDownloadSKIN"))
-            FDownloadSKIN = Download_SKIN(value_SKIN_url, value_SKIN_model, username, outtime)
+            FDownloadSKIN = Download_SKIN(value_SKIN_url, value_SKIN_model, username, outtime, choice_language)
             if FDownloadSKIN is False:
                 print(language.get("getError"))
     if value_CAPE_url:
@@ -174,10 +188,10 @@ def main():
             print(language.get("inputError"))
             DownloadCAPE = input(language.get("qDownloadCAPE")).strip().lower()
         if DownloadCAPE == "y":
-            FDownloadCAPE = Download_CAPE(value_CAPE_url, username , outtime)
+            FDownloadCAPE = Download_CAPE(value_CAPE_url, username , outtime, choice_language)
             if FDownloadCAPE is False:
                 print(language.get("errorDownloadCAPE"))
-                FDownloadCAPE = Download_CAPE(value_CAPE_url, username , outtime)
+                FDownloadCAPE = Download_CAPE(value_CAPE_url, username , outtime, choice_language)
                 if FDownloadCAPE is False:
                     print(language.get("getError"))  
 
