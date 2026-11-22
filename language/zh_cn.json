@@ -1,12 +1,17 @@
 {
     "main": {
+        "alex": "[alex(纤细)]",
+        "steve": "[steve(标准)]",
         "qUsername": "输入用户名: \n",
         "outData": "\n用户名:{username}\nUUID:{uuid}\n皮肤文件链接:{value_SKIN_url}\n皮肤类型:{value_SKIN_model_name}",
         "outDataCAPE": "披风文件链接:{value_CAPE_url}",
         "outTime": "时间戳:{value_timestamp_datetime}\n本地时间:{system_time}\n",
         "qDownloadSKIN": "是否下载皮肤文件? (y/n): \n",
         "qDownloadCAPE": "是否下载披风文件? (y/n): \n",
-        "inputError": "错误:请输入Y或N"
+        "inputError": "错误:请输入Y或N",
+        "getError" :"错误:下载失败,放弃请求,请检查网络。",
+        "errorDownloadSKIN": "错误:下载皮肤图片失败,正在重试",
+        "errorDownloadCAPE": "错误:下载披风文件失败,正在重试"
     },
     "Get_data":{
         "getError" :"错误:请求失败 {e}",
